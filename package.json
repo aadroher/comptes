@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "spago build",
+    "build": "spago build --purs-args \"-g sourcemaps\" --watch",
     "test": "spago test",
     "serve": "parcel dev/index.html  --log-level=\"4\" --open",
     "build-prod": "mkdir -p prod && cp dev/index.html prod/ && rm -rf dist && spago bundle-app --to prod/index.js && parcel build prod/index.html"

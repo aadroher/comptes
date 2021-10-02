@@ -4,35 +4,46 @@ import Prelude
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
-
-type State
-  = { count :: Int }
+import Data.Array (concat, (:))
 
 data Action
   = Increment | Decrement
 
+instance showAction :: Show Action where
+  show Increment = "Increment"
+  show Decrement = "Decrement"
+
+type State 
+  = { count :: Int
+    , events :: Array Action
+    }
+
+updateState :: State -> Action -> State
+updateState s _ = s  
+
 component :: forall q i o m. H.Component q i o m
 component =
   H.mkComponent
-    { initialState: \_ -> { count: 10 }
+    { initialState: \_ -> { count: 10, events: [] }
     , render
     , eval: H.mkEval H.defaultEval { handleAction = handleAction }
     }
 
 render :: forall cs m. State -> H.ComponentHTML Action cs m
 render state =
-  HH.div_
-    [ HH.p_
-        [ HH.text $ "Count is: " <> show state.count ]
-    , HH.button
-        [ HE.onClick \_ -> Increment ]
-        [ HH.text "Increment" ]
-    , HH.button
-        [ HE.onClick \_ -> Decrement ]
-        [ HH.text "Decrement" ]
-    ]
-
+  let events_ = HH.div_ $ map (\e -> HH.p_ [HH.text $ show e]) state.events
+  in 
+    HH.div_ $ [ HH.p_
+            [ HH.text $ "Count is: " <> show state.count ]
+        , HH.button
+            [ HE.onClick \_ -> Increment ]
+            [ HH.text "Increment" ]
+        , HH.button
+            [ HE.onClick \_ -> Decrement ]
+            [ HH.text "Decrement" ]
+        , events_
+        ] 
 handleAction :: forall cs o m. Action → H.HalogenM State Action cs o m Unit
 handleAction = case _ of
-  Increment -> H.modify_ \st -> st { count = st.count + 1 }
-  Decrement -> H.modify_ \st -> st { count = st.count - 1 }
+  Increment -> H.modify_ \st -> st { count = st.count + 1, events = Increment : st.events }
+  Decrement -> H.modify_ \st -> st { count = st.count - 1, events = Decrement : st.events }
