@@ -1,3 +1,7 @@
+.*
+!.gitignore
+!.github
+
 /bower_components/
 /node_modules/
 /.pulp-cache/
@@ -8,3 +12,7 @@
 /.purs*
 /.psa*
 /.spago
+
+
+dist/
+prod/*

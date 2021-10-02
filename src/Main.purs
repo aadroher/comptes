@@ -2,13 +2,12 @@ module Main where
 
 import Prelude
 
+import App.Button as Button
 import Effect (Effect)
-import Effect.Class.Console (logShow)
-import Effect.Console (log)
-import Euler (answer)
+import Halogen.Aff as HA
+import Halogen.VDom.Driver (runUI)
 
 main :: Effect Unit
-main = do
-  log "Welcome to the counter!"
-  logShow answer
-  
+main = HA.runHalogenAff do
+  body <- HA.awaitBody
+  runUI Button.component unit body

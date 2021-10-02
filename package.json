@@ -1,0 +1,17 @@
+{
+  "name": "comptes",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "spago build",
+    "test": "spago test",
+    "serve": "parcel dev/index.html --open",
+    "build-prod": "mkdir -p prod && cp dev/index.html prod/ && rm -rf dist && spago bundle-app --to prod/index.js && parcel build prod/index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.0.0-rc.0"
+  }
+}
