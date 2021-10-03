@@ -1,10 +1,11 @@
 module App.Button where
 
 import Prelude
+import Data.Array ((:))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
-import Data.Array (concat, (:))
+import Halogen.HTML.Properties as HP
 
 data Action
   = Increment
@@ -33,9 +34,9 @@ component =
 render :: forall cs m. State -> H.ComponentHTML Action cs m
 render state =
   let
-    events_ = HH.div_ $ map (\e -> HH.p_ [ HH.text $ show e ]) state.events
+    events_ = HH.div_ $ (\e -> HH.p_ [ HH.text $ show e ]) <$> state.events
   in
-    HH.div_
+    HH.div [ HP.classes [ HH.ClassName "button-container" ] ]
       $ [ HH.p_
             [ HH.text $ "Count is: " <> show state.count ]
         , HH.button
