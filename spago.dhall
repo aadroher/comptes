@@ -11,13 +11,26 @@ When creating a new Spago project, you can use
 to generate this file without the comments in this block.
 -}
 { name = "comptes"
-, dependencies = [ 
-    "console", 
-    "effect", 
-    "halogen", 
-    "arrays", 
-    "prelude", 
-    "psci-support" 
+, dependencies =
+  [ "aff"
+  , "arrays"
+  , "console"
+  , "datetime"
+  , "effect"
+  , "either"
+  , "exceptions"
+  , "foldable-traversable"
+  , "formatters"
+  , "halogen"
+  , "halogen-store"
+  , "lists"
+  , "maybe"
+  , "now"
+  , "partial"
+  , "prelude"
+  , "psci-support"
+  , "safe-coerce"
+  , "transformers"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
