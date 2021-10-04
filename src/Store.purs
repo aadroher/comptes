@@ -2,8 +2,9 @@ module Comptes.Store where
 
 import Prelude
 import Data.List (List(..), (:))
-import Partial.Unsafe (unsafeCrashWith)
 
+-- import Partial.Unsafe (unsafeCrashWith)
+-- import Web.HTML.Event.EventTypes (offline)
 data LogLevel
   = Dev
   | Prod
@@ -16,6 +17,8 @@ data Action
   = Increment
   | Decrement
 
+derive instance eqAction :: Eq Action
+
 type CounterStore
   = { counterActions :: List Action
     }
@@ -26,11 +29,10 @@ type Store
     }
 
 calculateResult :: Int -> List Action -> Int
-calculateResult n Nil = n
-
-calculateResult n (Increment : as) = calculateResult (n + 1) as
-
-calculateResult n (Decrement : as) = calculateResult (n - 1) as
+calculateResult n actions = case actions of
+  Nil -> n
+  (Increment : as) -> calculateResult (n + 1) as
+  (Decrement : as) -> calculateResult (n - 1) as
 
 count :: Store -> Int
 count { counter: { counterActions } } = calculateResult 0 counterActions
