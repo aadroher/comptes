@@ -9,8 +9,8 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Store.Connect (Connected, connect)
-import Halogen.Store.Monad (class MonadStore)
-import Halogen.Store.Select (selectAll, selectEq)
+import Halogen.Store.Monad (class MonadStore, updateStore)
+import Halogen.Store.Select (selectEq)
 
 -- data Action
 --   = Increment
@@ -31,6 +31,8 @@ type State
 data Action
   = Initialize
   | Receive (Connected (Maybe CS.Store) Unit)
+  | Increment
+  | Decrement
 
 component ::
   forall q o m.
@@ -65,16 +67,18 @@ render state =
     $ [ HH.p_
           [ HH.text $ "Count is: " <> show state.count ]
       , HH.button
-          [ HE.onClick \_ -> Initialize ]
+          [ HE.onClick \_ -> Increment ]
           [ HH.text "Increment" ]
       , HH.button
-          [ HE.onClick \_ -> Initialize ]
+          [ HE.onClick \_ -> Decrement ]
           [ HH.text "Decrement" ]
       ]
 
-handleAction :: forall cs o m. Action → H.HalogenM State Action cs o m Unit
+-- handleAction :: forall cs o m. Action → H.HalogenM State Action cs o m Unit
 handleAction = case _ of
   Initialize -> H.modify_ \st -> st { count = 10 }
   Receive { context: maybeStore } -> case maybeStore of
     Just store -> H.modify_ \st -> st { count = count store }
     Nothing -> H.modify_ \s -> s
+  Increment -> updateStore CS.Increment
+  Decrement -> updateStore CS.Decrement
