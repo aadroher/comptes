@@ -1,13 +1,13 @@
 module App.Button where
 
 import Prelude
+import Comptes.Component.Part.Button as B
 import Comptes.Store as CS
 import Control.Monad.State (class MonadState)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.HTML as HH
-import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.Store.Connect (Connected, connect)
 import Halogen.Store.Monad (class MonadStore, updateStore)
@@ -67,12 +67,8 @@ render state =
   HH.div [ HP.classes [ HH.ClassName "button-container" ] ]
     $ [ HH.p_
           [ HH.text $ "Count is: " <> show state.count ]
-      , HH.button
-          [ HE.onClick \_ -> Increment ]
-          [ HH.text "Increment" ]
-      , HH.button
-          [ HE.onClick \_ -> Decrement ]
-          [ HH.text "Decrement" ]
+      , B.button { label: "Increment", action: Increment, classNames: [ "increment" ] }
+      , B.button { label: "Decrement", action: Decrement, classNames: [ "decrement" ] }
       ]
 
 -- handleAction :: forall cs o m. Action → H.HalogenM State Action cs o m Unit
