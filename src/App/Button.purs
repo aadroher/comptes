@@ -2,6 +2,7 @@ module App.Button where
 
 import Prelude
 import Comptes.Store as CS
+import Control.Monad.State (class MonadState)
 import Data.List (List(..), (:))
 import Data.Maybe (Maybe(..))
 import Halogen as H
@@ -75,6 +76,11 @@ render state =
       ]
 
 -- handleAction :: forall cs o m. Action → H.HalogenM State Action cs o m Unit
+handleAction ::
+  forall s m.
+  MonadState State m =>
+  MonadStore CS.Action s m =>
+  Action -> m Unit
 handleAction = case _ of
   Initialize -> H.modify_ \st -> st { count = 10 }
   Receive { context: maybeStore } -> case maybeStore of
