@@ -18,7 +18,8 @@ import Halogen (HalogenM)
 -- | date, time, or datetime so our tests can be deterministic. That way we can write our business
 -- | logic once and use the exact same code in our tests and in production.
 class
-  Monad m <= Now m where
+  Monad m <=
+  Now m where
   now :: m Instant
   nowDate :: m Date
   nowTime :: m Time
