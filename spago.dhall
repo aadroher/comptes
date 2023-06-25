@@ -13,12 +13,10 @@ to generate this file without the comments in this block.
 { name = "comptes"
 , dependencies =
   [ "aff"
-  , "arrays"
   , "console"
   , "datetime"
   , "effect"
   , "either"
-  , "exceptions"
   , "foldable-traversable"
   , "formatters"
   , "halogen"
@@ -26,9 +24,7 @@ to generate this file without the comments in this block.
   , "lists"
   , "maybe"
   , "now"
-  , "partial"
   , "prelude"
-  , "psci-support"
   , "safe-coerce"
   , "transformers"
   ]
