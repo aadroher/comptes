@@ -4,17 +4,29 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "spago build --purs-args \"-g sourcemaps\" --watch",
-    "test": "spago test",
-    "serve": "parcel dev/index.html --log-level=\"verbose\" --open",
-    "build-prod": "mkdir -p prod && cp dev/index.html prod/ && rm -rf dist && spago bundle-app --to prod/index.js && parcel build prod/index.html"
+    "build:spago": "spago build",
+    "build:spago:prod": "spago build && spago bundle-app --to './src/index.prod.js' && npm run transform-require",
+    "build": "rm -rf dist && npm run build:spago:prod && vite build",
+    "format": "purs-tidy format-in-place 'src/**/*.purs'",
+    "prestart": "npm run build:spago",
+    "preview": "vite preview",
+    "serve:prod": "serve dist -l 8080",
+    "spago": "spago",
+    "start": "vite",
+    "start:spago": "spago build --watch",
+    "transform-require": "node scripts/transform-require.js",
+    "vite": "vite"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.9.3",
     "purescript": "^0.15.9",
     "purty": "^7.0.0",
-    "spago": "^0.21.0"
+    "spago": "^0.21.0",
+    "vite": "^4.3.9"
+  },
+  "dependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "vite-plugin-ejs": "^1.6.4"
   }
 }
