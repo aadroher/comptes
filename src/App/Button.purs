@@ -1,4 +1,11 @@
-module App.Button where
+module App.Button
+  ( Action
+  , State
+  , calculateResult
+  , component
+  , count
+  , render
+  ) where
 
 import Prelude
 import Comptes.Component.Part.Button as B
@@ -59,12 +66,12 @@ render state =
       , B.button { label: "Decrement", action: Decrement, classNames: [ "decrement" ] }
       ]
 
--- handleAction :: forall cs o m. Action → H.HalogenM State Action cs o m Unit
 handleAction ::
   forall s m.
   MonadState State m =>
   MonadStore CS.Action s m =>
-  Action -> m Unit
+  Action ->
+  m Unit
 handleAction = case _ of
   Initialize -> H.modify_ \st -> st { count = 10 }
   Receive { context: maybeStore } -> case maybeStore of
