@@ -13,18 +13,6 @@ import Halogen.Store.Connect (Connected, connect)
 import Halogen.Store.Monad (class MonadStore, updateStore)
 import Halogen.Store.Select (selectEq)
 
--- data Action
---   = Increment
---   | Decrement
--- instance showAction :: Show Action where
---   show Increment = "Increment"
---   show Decrement = "Decrement"
--- type State
---   = { count :: Int
---     , events :: Array Action
---     }
--- updateState :: State -> Action -> State
--- updateState s _ = s
 type State
   = { count :: Int
     }
