@@ -3,8 +3,6 @@ module Comptes.Store where
 import Prelude
 import Data.List (List(..), (:))
 
--- import Partial.Unsafe (unsafeCrashWith)
--- import Web.HTML.Event.EventTypes (offline)
 data LogLevel
   = Dev
   | Prod
