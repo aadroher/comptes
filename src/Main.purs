@@ -1,7 +1,7 @@
 module Main where
 
 import Prelude
-import App.Button as Button
+import Comptes.Component.Clicker as Clicker
 import Effect (Effect)
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
@@ -16,5 +16,5 @@ main =
     let
       initialStore :: Store
       initialStore = { logLevel: Dev, counter: { counterActions: Nil } }
-    rootComponent <- runAppM initialStore Button.component
+    rootComponent <- runAppM initialStore Clicker.component
     runUI rootComponent unit body
